@@ -1,6 +1,7 @@
 package stepdefinition;
 
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -56,7 +57,17 @@ public class AddCoustomer {
 		driver.findElement(By.id("email")).sendKeys(data.get(2));
 		driver.findElement(By.name("addr")).sendKeys(data.get(3));
 		driver.findElement(By.id("telephoneno")).sendKeys(data.get(4));
-	   
+	   }
+	@When("User enter all the fields with one dimesional map")
+	public void user_enter_all_the_fields_with_one_dimesional_map(DataTable coustomerdata) {
+	  Map<String, String> data1 = coustomerdata.asMap(String.class, String.class);
+	  driver.findElement(By.xpath("(//label[@for='done'])[1]")).click();;
+			driver.findElement(By.id("fname")).sendKeys(data1.get("Fname"));
+			driver.findElement(By.id("lname")).sendKeys(data1.get("Lname"));
+			driver.findElement(By.id("email")).sendKeys(data1.get("Email"));
+			driver.findElement(By.name("addr")).sendKeys(data1.get("Address"));
+			driver.findElement(By.id("telephoneno")).sendKeys(data1.get("phno"));
+		
 	}
 	@When("User click on submit button")
 	public void user_click_on_submit_button() {
