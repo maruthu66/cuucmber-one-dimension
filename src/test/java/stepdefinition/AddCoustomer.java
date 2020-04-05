@@ -5,88 +5,112 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.cucumber.datatable.DataTable;
+import objectrepository.AddCustomerPage;
+import objectrepository.Homepage;
+import resources.FunctionalLibrary;
 
-public class AddCoustomer {
-	
-	static WebDriver driver;
-	@Given("User lanches demo telecomsite")
-	public void user_lanches_demo_telecomsite() throws Throwable {
-		System.setProperty("webdriver.chrome.driver", "C:\\Users\\Maruthu\\eclipse-workspace\\cucmber\\src\\main\\driver\\chromedriver.exe");
-		driver=new ChromeDriver();
-		driver.get("http://demo.guru99.com/telecom/index.html");
-		   Thread.sleep(3000);
-			  driver.switchTo().frame(driver.findElement(By.xpath("//*[@id=\"flow_close_btn_iframe\"]")));
-				 driver.findElement(By.xpath("//div[@id='closeBtn']")).click();;
-			  driver.switchTo().parentFrame();
-	  
-	}
+public class AddCoustomer  extends FunctionalLibrary {
 
-	@Given("User clic on and add coustomer button")
-	public void user_clic_on_and_add_coustomer_button() throws Throwable {
-		driver.findElement(By.xpath("(//a[text()='Add Customer'])[1]")).click();
-		 Thread.sleep(5000);
-		  driver.switchTo().frame(driver.findElement(By.xpath("//*[@id=\"flow_close_btn_iframe\"]")));
-		 driver.findElement(By.xpath("//div[@id='closeBtn']")).click();
-		  driver.switchTo().parentFrame();
-	  
-	}
+    FunctionalLibrary f = new FunctionalLibrary();
+    Homepage hp = new Homepage();
+    AddCustomerPage cp = new AddCustomerPage();
 
-	@When("User enter all the fields")
-	public void user_enter_all_the_fields() {
-		driver.findElement(By.xpath("(//label[@for='done'])[1]")).click();;
-		driver.findElement(By.id("fname")).sendKeys("maruthu");
-		driver.findElement(By.id("lname")).sendKeys("pandi");
-		driver.findElement(By.id("email")).sendKeys("pandi@gmail.com");
-		driver.findElement(By.name("addr")).sendKeys("tirunelveli");
-		driver.findElement(By.id("telephoneno")).sendKeys("12233334444");
-	   
-	   }
-	@When("User enter all the fields with one dimesional")
-	public void user_enter_all_the_fields_with_one_dimesional(DataTable dataTable) {
-      List<String> data = dataTable.asList();
-      driver.findElement(By.xpath("(//label[@for='done'])[1]")).click();;
-		driver.findElement(By.id("fname")).sendKeys(data.get(0));
-		driver.findElement(By.id("lname")).sendKeys(data.get(1));
-		driver.findElement(By.id("email")).sendKeys(data.get(2));
-		driver.findElement(By.name("addr")).sendKeys(data.get(3));
-		driver.findElement(By.id("telephoneno")).sendKeys(data.get(4));
-	   }
-	@When("User enter all the fields with one dimesional map")
-	public void user_enter_all_the_fields_with_one_dimesional_map(DataTable coustomerdata) {
-	  Map<String, String> data1 = coustomerdata.asMap(String.class, String.class);
-	  driver.findElement(By.xpath("(//label[@for='done'])[1]")).click();;
-			driver.findElement(By.id("fname")).sendKeys(data1.get("Fname"));
-			driver.findElement(By.id("lname")).sendKeys(data1.get("Lname"));
-			driver.findElement(By.id("email")).sendKeys(data1.get("Email"));
-			driver.findElement(By.name("addr")).sendKeys(data1.get("Address"));
-			driver.findElement(By.id("telephoneno")).sendKeys(data1.get("phno"));
+    @Given("User clic on and add coustomer button")
+    public void user_clic_on_and_add_coustomer_button() throws Throwable {
+    	try{
+    		handleFrame();
+    		}catch(Exception e){
+    			
+    		}
+
+    	       f.button(hp.getAddCustomerBtn());
+    }
+
+@When("User enter all the fields")
+public void user_enter_all_the_fields() throws Throwable {
+	try{
+		handleFrame();
+		}catch(Exception e){
+			
+		}
 		
-	}
-	@When("User click on submit button")
-	public void user_click_on_submit_button() {
-		driver.findElement(By.xpath("(//input[@value='Submit'])[1]")).click();
-	   
-	}
+	    f.button(cp.getDoneBtn());
+	    f.insertText(cp.getFname(), "maruthu");
+	    f.insertText(cp.getLname(), "pandi");
+	    f.insertText(cp.getEmail(), "pandi@gmail.com");
+	    f.insertText(cp.getAddress(), "tirunelveli town");
+	    f.insertText(cp.getPhno(), "1223334444");
+		
+}
 
-	@Then("User should be displayed coustomer ID or not")
-	public void user_should_be_displayed_coustomer_ID_or_not() throws Throwable {
-		 Thread.sleep(5000);
-		  driver.switchTo().frame(driver.findElement(By.xpath("//*[@id=\"flow_close_btn_iframe\"]")));
-		 driver.findElement(By.xpath("//div[@id='closeBtn']")).click();
-		  driver.switchTo().parentFrame();
-	    Assert.assertTrue(driver.findElement(By.xpath("(//td[@align='center'])[2]")).isDisplayed());
-		String text = driver.findElement(By.xpath("(//td[@align='center'])[2]")).getText();
-		System.out.println(text);
-	   
-	}
+@When("User click on submit button")
+public void user_click_on_submit_button() {
+	f.button(cp.getSubmitBtn());
+}
+
+@Then("User should be displayed coustomer ID or not")
+public void user_should_be_displayed_coustomer_ID_or_not() throws Throwable {
+	try{
+		handleFrame();
+		}catch(Exception e){
+			
+		}
+		
+		Assert.assertTrue(driver.findElement(By.xpath("(//td[@align='center'])[2]")).isDisplayed());
+	    
+}
+
+@When("User enter all the fields with one dimesional")
+public void user_enter_all_the_fields_with_one_dimesional(DataTable dataTable) throws Throwable {
+	List<String> data = dataTable.asList(String.class);
+	try{
+		handleFrame();
+		}catch(Exception e){
+			
+		}
+	
+	 f.button(cp.getDoneBtn());
+	   f.insertText(cp.getFname(), data.get(0));
+	    f.insertText(cp.getLname(), data.get(1));
+	    f.insertText(cp.getEmail(), data.get(2));
+	    f.insertText(cp.getAddress(), data.get(3));
+	    f.insertText(cp.getPhno(), data.get(4));	
+		
+    throw new cucumber.api.PendingException();
+}
 
 
+
+@When("User enter all the fields with one dimesional map")
+public void user_enter_all_the_fields_with_one_dimesional_map(DataTable dataTab) throws Throwable {
+	try{
+		handleFrame();
+		}catch(Exception e){
+			
+		}
+	Map<String, String> data = dataTab.asMap(String.class, String.class);
+		
+		driver.findElement(By.xpath("(//label[@for='done'])[1]")).click();
+		driver.findElement(By.id("fname")).sendKeys(data.get("Fname"));
+		driver.findElement(By.id("lname")).sendKeys(data.get("Lname"));
+		driver.findElement(By.id("email")).sendKeys(data.get("Email"));
+		driver.findElement(By.name("addr")).sendKeys(data.get("Address"));
+		driver.findElement(By.id("telephoneno")).sendKeys(data.get("phno"));
+	
+   }
+public void handleFrame() throws Throwable {
+	 Thread.sleep(3000);
+	 driver.switchTo().frame(driver.findElement(By.xpath("//*[@id=\"flow_close_btn_iframe\"]")));
+	 driver.findElement(By.id("closeBtn")).click();
+	 driver.switchTo().parentFrame();
 
 }
+
+	
+	
+	}

@@ -1,15 +1,16 @@
+@regressionoct
 Feature: Title of your feature
   I want to use this template for my feature file
 
 Background:
  And User click on add tariff button
  
-  
+  @sanity
   Scenario: Title of your scenario 
     When User enters tariff plan fields
     And User click on tariff submit button
     Then User should be received congratulation message
-  
+  @smoke
    Scenario: Title of your scenario
     When User enters tariff plan fields with two dim list
       | 400 | 300 | 200 | 100 | 4 | 3 | 2 |
@@ -18,7 +19,7 @@ Background:
       | 100 | 400 | 400 | 100 | 7 | 6 | 5 |
     And User click on tariff submit button
     Then User should be received congratulation message
-
+    @maruthu
     Scenario: Title of your scenario
     When User enters tariff plan fields with two dim map
       | MR  | FLM | FIM | FSP | LMC | IMC | SMC |
@@ -28,7 +29,7 @@ Background:
       | 100 | 400 | 400 | 100 |   7 |   6 |   5 |
     And User click on tariff submit button
     Then User should be received congratulation message
-    
+    @sanity
    Scenario Outline: Title of your scenario
     When User enters tariff plan fields "<MR>","<FLM>","<FIM>","<FSP>","<LMC>","<IMC>","<SMC>"
     And User click on tariff submit button
